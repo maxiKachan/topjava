@@ -60,7 +60,7 @@ public class UserMealsUtil {
         Map<LocalDate, List<UserMeal>> mapUserMeals = meals.stream().collect(Collectors.groupingBy((a -> a.getDateTime().toLocalDate())));
 
         userMealWithExcessList = userMealsWithFilter.stream()
-                .map(e -> new UserMealWithExcess(e.getDateTime(), e.getDescription(), e.getCalories(), (mapUserMeals.get(e.getDateTime().toLocalDate()).stream().map(a -> e.getCalories()).reduce(Integer::sum).get() > caloriesPerDay)))
+                .map(e -> new UserMealWithExcess(e.getDateTime(), e.getDescription(), e.getCalories(), (mapUserMeals.get(e.getDateTime().toLocalDate()).stream().map(a -> e.getCalories()).reduce(Integer::sum).orElse(0) > caloriesPerDay)))
                 .collect(Collectors.toList());
 
 
